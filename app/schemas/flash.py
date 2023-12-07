@@ -23,6 +23,7 @@ class SFlash(BaseModel):
     truck_model: str
     engine_model: str
     ecu_model: str
+    firmware: str
     flasher: str
     modified: bool
     file_name: str
