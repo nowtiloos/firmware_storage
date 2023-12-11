@@ -17,4 +17,4 @@ class Firmwares(Base):
     user_uploaded: Mapped[str] = mapped_column(ForeignKey("users.name"), nullable=False)
 
     def __str__(self) -> str:
-        return f"Firmware: {self.file_path}"
+        return f"Firmware: {self.file_name}"

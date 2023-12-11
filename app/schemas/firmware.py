@@ -19,15 +19,15 @@ class EcuModelEnum(str, Enum):
     edc17cp54 = "EDC17 CP54"
 
 
-class SFlash(BaseModel):
+class SFirmware(BaseModel):
+    file_name: str
     truck_model: str
     engine_model: str
     ecu_model: str
     firmware: str
     flasher: str
-    modified: bool
-    file_name: str
-    file_path: None
+    file_path: str
+    user_uploaded: str
 
     class Config:
         from_attributes = True

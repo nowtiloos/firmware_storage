@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.controllers.flash import router as router_flash
+from app.routing.firmware import router as router_firmware
 
 app: FastAPI = FastAPI()
 
-app.include_router(router_flash)
+app.include_router(router_firmware)
