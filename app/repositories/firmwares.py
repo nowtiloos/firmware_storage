@@ -1,8 +1,7 @@
-from abc import ABC
-
+from app.interfaces.repository import IFirmwaresRepository
 from app.models.firmwares import Firmwares
-from app.utils.repository import SQLAlchemyRepository
+from app.repositories.base_repository import SQLAlchemyRepository
 
 
-class FirmwaresRepository(SQLAlchemyRepository, ABC):
+class FirmwaresRepository(SQLAlchemyRepository, IFirmwaresRepository):
     model = Firmwares

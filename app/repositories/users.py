@@ -1,8 +1,7 @@
-from abc import ABC
-
+from app.interfaces.repository import IUsersRepository
 from app.models.users import Users
-from app.utils.repository import SQLAlchemyRepository
+from app.repositories.base_repository import SQLAlchemyRepository
 
 
-class UsersRepository(SQLAlchemyRepository, ABC):
+class UsersRepository(SQLAlchemyRepository, IUsersRepository):
     model = Users

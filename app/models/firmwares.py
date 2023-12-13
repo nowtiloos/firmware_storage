@@ -13,7 +13,7 @@ class Firmwares(Base):
     ecu_model: Mapped[str] = mapped_column(nullable=False)
     firmware: Mapped[str] = mapped_column(nullable=False)
     flasher: Mapped[str] = mapped_column(nullable=False)
-    file_path: Mapped[str]
+    file_path: Mapped[str] = mapped_column(nullable=True)
     user_uploaded: Mapped[str] = mapped_column(ForeignKey("users.name"), nullable=False)
 
     def __str__(self) -> str:
