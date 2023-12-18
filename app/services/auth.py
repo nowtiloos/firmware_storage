@@ -1,7 +1,9 @@
 from datetime import datetime, timedelta
 
+from fastapi import Response
 from jose import jwt
 from passlib.context import CryptContext
+from pydantic import EmailStr
 
 from app.config import settings
 from app.interfaces.unit_of_work import IUnitOfWork
@@ -11,7 +13,7 @@ from app.exceptions.exceptions import (
     IncorrectEmailOrPasswordException,
     UserAlreadyExistsException,
 )
-from app.schemas.auth import SUserRegister
+from app.schemas.auth import SUserRegister, SUserLogin
 
 pwd_context = CryptContext(schemes="bcrypt", deprecated="auto")
 
@@ -33,16 +35,15 @@ class AuthServices:
         to_encode = data.copy()
         expire = datetime.utcnow() + timedelta(minutes=30)
         to_encode.update({'exp': expire})
-        encoded_jwt = jwt.encode(to_encode, settings.JWT_KEY, settings.JWT_ALGORITHM)
+        encoded_jwt = jwt.encode(claims=to_encode, key=settings.JWT_KEY, algorithm=settings.JWT_ALGORITHM)
         return encoded_jwt
 
-    #
-    # async def authenticate_user(self, email: EmailStr, password: str):
-    #     async with self.unit_of_work as uow:
-    #         user = await uow.users_repository.find_one_or_none(email=email)
-    #         if not (user and self.verify_password(password, user.hashed_password)):
-    #             raise IncorrectEmailOrPasswordException
-    #         return user
+    async def authenticate_user(self, email: EmailStr, password: str):
+        async with self.unit_of_work as uow:
+            user = await uow.users_repository.find_one_or_none(email=email)
+            if not (user and self.verify_password(password, user.hashed_password)):
+                raise IncorrectEmailOrPasswordException
+            return user
 
     async def register_user(self, user_data: SUserRegister):
         async with self.unit_of_work as uow:
@@ -60,14 +61,14 @@ class AuthServices:
             if not new_user:
                 raise CannotAddDataToDatabase
             return {"message": "Регистрация успешно завершена"}
-    #
-    # async def login_user(self, response: Response, user_data: SUserLogin):
-    #     user = await self.authenticate_user(user_data.email, user_data.password)
-    #     access_token = self.create_access_token({"sub": str(user.id)})
-    #     response.set_cookie("booking_access_token", access_token, httponly=True)
-    #     return {"message": "Успешный вход в систему", "access_token": access_token}
-    #
-    # @staticmethod
-    # async def logout_user(response: Response):
-    #     response.delete_cookie("booking_access_token")
-    #     return {"message": "Успешный выход из системы"}
+
+    async def login_user(self, response: Response, user_data: SUserLogin):
+        user = await self.authenticate_user(user_data.email, user_data.password)
+        access_token = self.create_access_token({"sub": user.name})
+        response.set_cookie("fw_storage_access_token", access_token, httponly=True)
+        return {"message": "Успешный вход в систему", "access_token": access_token}
+
+    @staticmethod
+    async def logout_user(response: Response):
+        response.delete_cookie("fw_storage_access_token")
+        return {"message": "Успешный выход из системы"}
