@@ -2,11 +2,11 @@ from pydantic import BaseModel
 
 
 class SFirmware(BaseModel):
+    firmware: str
     file_name: str
     truck_model: str
     engine_model: str
     ecu_model: str
-    firmware: str
     flasher: str
     file_path: str
     user_uploaded: str
@@ -22,10 +22,8 @@ class SFirmwareSearch(BaseModel):
 
 
 class SNewFirmware(BaseModel):
-    file_name: str
+    firmware: str
     truck_model: str
     engine_model: str
     ecu_model: str
-    firmware: str
     flasher: str
-    user_uploaded: str

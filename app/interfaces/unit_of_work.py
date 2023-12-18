@@ -8,10 +8,10 @@ from app.repositories.users import UsersRepository
 
 
 class IUnitOfWork(ABC):
-    firmware_calibrators: FirmwareCalibratorsRepository
-    firmwares: FirmwaresRepository
-    modified_firmwares: ModifiedFirmwaresRepository
-    users: UsersRepository
+    firmware_calibrators_repository: FirmwareCalibratorsRepository
+    firmwares_repository: FirmwaresRepository
+    modified_firmwares_repository: ModifiedFirmwaresRepository
+    users_repository: UsersRepository
 
     @abstractmethod
     async def __aenter__(self) -> "IUnitOfWork":

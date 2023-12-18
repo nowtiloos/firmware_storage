@@ -1,18 +1,21 @@
 from fastapi import APIRouter, Depends
 
-from app.dependices.services import get_firmwares_services
+from app.dependencies.services import get_firmwares_services
 from app.schemas.firmware import SFirmwareSearch, SNewFirmware
 from app.services.firmwares import FirmwareServices
 
-router: APIRouter = APIRouter(prefix="/flash", tags=["Upload/Download flash"])
+router: APIRouter = APIRouter(prefix="/firmwares", tags=["Upload/Download flash"])
 
 
 @router.post(path="/upload")
-async def upload_flash(firmware: SNewFirmware, firmware_services: FirmwareServices = Depends(get_firmwares_services)):
-    new_firmware = await firmware_services.add_firmwares(upload_firmware=firmware)
-    return new_firmware
+async def upload_flash(firmware: SNewFirmware,
+                       file_path: str,
+                       user_uploaded: str,
+                       firmware_services: FirmwareServices = Depends(get_firmwares_services)):
+    await firmware_services.add_firmwares(upload_firmware=firmware)
 
 
 @router.get("")
-async def get_flash(query: SFirmwareSearch):
-    ...
+async def get_flash(firmware_services: FirmwareServices = Depends(get_firmwares_services)):
+    search = await firmware_services.search_firmwares()
+    return search

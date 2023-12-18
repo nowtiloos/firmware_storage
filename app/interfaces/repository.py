@@ -7,6 +7,10 @@ class IRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
+    async def find_by_filter(self, **kwargs):
+        raise NotImplementedError
+
+    @abstractmethod
     async def find_one_or_none(self, **kwargs):
         raise NotImplementedError
 

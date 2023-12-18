@@ -21,24 +21,9 @@ class Settings(BaseSettings):
             f"{self.DB_PORT}/{self.DB_NAME}"
         )
 
-    #
-    # TEST_DB_HOST: str
-    # TEST_DB_PORT: int
-    # TEST_DB_USER: str
-    # TEST_DB_PASS: str
-    # TEST_DB_NAME: str
-    #
-    # @property
-    # def TEST_DATABASE_URL(self) -> str:
-    #     return (
-    #         f"postgresql+asyncpg://{self.TEST_DB_USER}:"
-    #         f"{self.TEST_DB_PASS}@{self.TEST_DB_HOST}:"
-    #         f"{self.TEST_DB_PORT}/{self.TEST_DB_NAME}"
-    #     )
-    #
-    # SECRET_KEY: str
-    # ALGORITHM: str
-    #
+    JWT_KEY: str
+    JWT_ALGORITHM: str
+
     # SMTP_HOST: str
     # SMTP_PORT: int
     # SMTP_USER: str

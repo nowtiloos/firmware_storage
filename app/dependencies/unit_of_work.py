@@ -1,5 +1,3 @@
-from typing import Type
-
 from app.unit_of_work.unit_of_work import SQLAlchemyUnitOfWork
 
 

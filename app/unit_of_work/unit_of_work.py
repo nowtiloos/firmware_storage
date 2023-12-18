@@ -16,10 +16,10 @@ class SQLAlchemyUnitOfWork(IUnitOfWork):
     async def __aenter__(self) -> Self:
         self.session = self.session_factory()
 
-        self.firmware_calibrators = FirmwareCalibratorsRepository(self.session)
-        self.firmwares = FirmwaresRepository(self.session)
-        self.modified_firmwares = ModifiedFirmwaresRepository(self.session)
-        self.users = UsersRepository(self.session)
+        self.firmware_calibrators_repository = FirmwareCalibratorsRepository(self.session)
+        self.firmwares_repository = FirmwaresRepository(self.session)
+        self.modified_firmwares_repository = ModifiedFirmwaresRepository(self.session)
+        self.users_repository = UsersRepository(self.session)
 
         return self
 
