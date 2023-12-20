@@ -41,3 +41,8 @@ class IncorrectTokenFormatException(ProjectException):
 
 class UserIsNotPresentException(ProjectException):
     status_code = status.HTTP_401_UNAUTHORIZED
+
+
+class FileNotSavedException(ProjectException):
+    status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
+    detail = "Не удалось сохранить файл"

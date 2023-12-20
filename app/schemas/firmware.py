@@ -2,7 +2,6 @@ from pydantic import BaseModel
 
 
 class SFirmware(BaseModel):
-    firmware: str
     file_name: str
     truck_model: str
     engine_model: str
@@ -10,20 +9,14 @@ class SFirmware(BaseModel):
     flasher: str
     file_path: str
     user_uploaded: str
+    file_size: int
 
     class Config:
         from_attributes = True
 
 
-class SFirmwareSearch(BaseModel):
+class FirmwareSearchDTO(BaseModel):
     truck_model: str
     ecu_model: str
     modified: bool
 
-
-class SNewFirmware(BaseModel):
-    firmware: str
-    truck_model: str
-    engine_model: str
-    ecu_model: str
-    flasher: str

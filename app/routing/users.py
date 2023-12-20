@@ -6,7 +6,7 @@ from app.models.users import Users
 from app.schemas.users import SUsers
 from app.services.users import UsersServices
 
-router = APIRouter(prefix="/users", tags=["Пользователи"])
+router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @router.get("/me")

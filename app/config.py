@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     JWT_KEY: str
     JWT_ALGORITHM: str
 
+    FIRMWARE_FOLDER: str
     # SMTP_HOST: str
     # SMTP_PORT: int
     # SMTP_USER: str
