@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, UploadFile
 
-from app.dependencies.auth import get_current_user
+from app.dependencies.auth import get_current_user_with_access_to_write, get_current_user_with_access_to_read
 from app.dependencies.file_manager import get_firmware_folder
 from app.dependencies.services import get_firmwares_services
 from app.models.users import Users
@@ -17,7 +17,7 @@ async def upload_flash(file: UploadFile,
                        engine_model: str,
                        ecu_model: str,
                        flasher: str,
-                       user: Users = Depends(get_current_user),
+                       user: Users = Depends(get_current_user_with_access_to_write),
                        file_manager: FileManager = Depends(get_firmware_folder),
                        firmware_services: FirmwareServices = Depends(get_firmwares_services)):
     file_path: str = await file_manager.save_uploaded_file(file=file)
@@ -34,6 +34,8 @@ async def upload_flash(file: UploadFile,
 
 
 @router.get("")
-async def get_flash(firmware_services: FirmwareServices = Depends(get_firmwares_services)) -> list[SFirmware]:
-    search = await firmware_services.search_firmwares()
+async def get_flash(firmware_services: FirmwareServices = Depends(get_firmwares_services),
+                    user: Users = Depends(get_current_user_with_access_to_read)) -> list[SFirmware]:
+    if user:
+        search = await firmware_services.search_firmwares()
     return search

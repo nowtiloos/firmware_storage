@@ -33,7 +33,7 @@ class AuthServices:
     @staticmethod
     def create_access_token(data: dict) -> str:
         to_encode = data.copy()
-        expire = datetime.utcnow() + timedelta(minutes=30)
+        expire = datetime.utcnow() + timedelta(minutes=60)
         to_encode.update({'exp': expire})
         encoded_jwt = jwt.encode(claims=to_encode, key=settings.JWT_KEY, algorithm=settings.JWT_ALGORITHM)
         return encoded_jwt

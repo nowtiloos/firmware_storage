@@ -46,3 +46,13 @@ class UserIsNotPresentException(ProjectException):
 class FileNotSavedException(ProjectException):
     status_code = status.HTTP_500_INTERNAL_SERVER_ERROR
     detail = "Не удалось сохранить файл"
+
+
+class NotAccessToReadException(ProjectException):
+    status_code = status.HTTP_403_FORBIDDEN
+    detail = "Доступ для чтения запрещен"
+
+
+class NotAccessToWriteException(ProjectException):
+    status_code = status.HTTP_403_FORBIDDEN
+    detail = "Доступ для записи запрещен"
