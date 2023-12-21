@@ -1,3 +1,7 @@
+from typing import Annotated
+from enum import Enum
+
+from fastapi import Query, UploadFile
 from pydantic import BaseModel
 
 
@@ -15,8 +19,25 @@ class SFirmware(BaseModel):
         from_attributes = True
 
 
-class FirmwareSearchDTO(BaseModel):
-    truck_model: str
+class TruckEnum(str, Enum):
+    mercedes = "Mercedes-Benz"
+    volvo_trucks = "VOLVO Trucks"
+    renault_trucks = "RENAULT Trucks"
+    kamaz = "KAMAZ"
+    scania = "Scania"
+    daf = "DAF"
+
+
+class UploadFirmwareDTO(BaseModel):
+    file: UploadFile
+    truck_model: TruckEnum
+    engine_model: str
     ecu_model: str
-    modified: bool
+    flasher: str
+
+
+class FirmwareSearchDTO(BaseModel):
+    truck_model: TruckEnum
+    engine_model: Annotated[str | None, Query(default=None)]
+    ecu_model: Annotated[str | None, Query(default=None)]
 

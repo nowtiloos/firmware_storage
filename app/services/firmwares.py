@@ -8,10 +8,14 @@ class FirmwareServices:
 
     async def add_firmwares(self, upload_firmware: SFirmware):
         async with self.unit_of_work as uow:
-            new_firmware = await uow.firmwares_repository.add(**upload_firmware.model_dump())
-            return new_firmware
+            await uow.firmwares_repository.add(**upload_firmware.model_dump())
+            return {"message": "Файл загружен на сервер"}
 
-    async def search_firmwares(self):
+    async def search_all_firmwares(self):
         async with self.unit_of_work as uow:
-            search = await uow.firmwares_repository.find_all()
-            return search
+            return await uow.firmwares_repository.find_all()
+
+    async def search_firmwares_by_filter(self, **kwargs):
+        async with self.unit_of_work as uow:
+            filers: dict = {key: value for key, value in kwargs.items() if value}
+            return await uow.firmwares_repository.find_by_filter(**filers)

@@ -1,7 +1,5 @@
 import os
-
 from fastapi import UploadFile
-
 from app.exceptions.exceptions import FileNotSavedException
 
 

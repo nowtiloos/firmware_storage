@@ -14,4 +14,4 @@ class ModifiedFirmwares(Base):
     user_uploaded: Mapped[str] = mapped_column(ForeignKey("users.name"))
 
     def __str__(self) -> str:
-        return f"Firmware: {self.file_name}"
+        return f"Modified Firmware: {self.file_name}"
