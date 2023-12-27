@@ -8,7 +8,7 @@ from app.schemas.firmware import SFirmware, FirmwareSearchDTO, UploadFirmwareDTO
 from app.services.file_manager import FileManager
 from app.services.firmwares import FirmwareServices
 
-router: APIRouter = APIRouter(prefix="/firmwares", tags=["Firmware Manager"])
+router: APIRouter = APIRouter(prefix="/original_firmwares", tags=["Original firmwares"])
 
 
 @router.post(path="/upload_file", status_code=201)
@@ -30,7 +30,7 @@ async def upload_firmware(
     return await firmware_services.add_firmwares(firmware)
 
 
-@router.get("")
+@router.get("/all")
 async def get_all_firmwares(
         firmware_services: FirmwareServices = Depends(get_firmwares_services),
         user: Users = Depends(get_current_user_with_access_to_read)
